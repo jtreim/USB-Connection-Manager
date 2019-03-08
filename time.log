@@ -1,0 +1,28 @@
+DATE    START   END     NOTES
+03/08   14:50   15:40   Initialized repository.
+                        Looking up how to remotely logon to windows machine, cause steam link
+                        needs that.
+                        https://www.tekrevue.com/tip/skip-windows-10-login-screen/ -> doesn't work remotely...
+                        https://www.intowindows.com/how-to-automatically-login-in-windows-10/ -> default password?
+                        https://stackoverflow.com/questions/48038678/how-to-programmatically-interact-with-winlogon
+                        Raspberry pi remote desktop:
+                        https://www.makeuseof.com/tag/rugged-raspberry-pi-projects-outdoors/
+                        Allow it to create a restricted Windows user on the first time?
+                        https://stackoverflow.com/questions/5984600/how-to-programmatically-create-windows-user-accounts-on-windows-7-or-windows-ser
+                        https://stackoverflow.com/questions/3729406/create-local-user-account
+                        I'd have to give it admin privileges for at least the first time though.
+                        Still need to figure out how to give an application permission to turn on
+                        the machine.
+                        
+                        https://www.ctrl.blog/entry/how-to-rdpwrapper-win10-home
+                        I might not be able to remote desktop with my version of windows 10
+
+                        My current thought is to create a restricted Windows user (somehow) that can only
+                        allow steam link connections. Then if I can detect a wake-up signal from the
+                        registered pi app, and recognize that it came from this app, the windows machine
+                        automatically logs in to that restricted account. Of course, automating this setup
+                        on both machines might be a bit of a pain.
+                        The only other thing for all of this is to make a script that does all this when
+                        the right USB connection is made.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     NOTES                     
