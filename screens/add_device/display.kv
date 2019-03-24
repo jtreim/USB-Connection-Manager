@@ -1,0 +1,28 @@
+#:kivy 1.10.1
+
+<AddDeviceScreen>
+    BoxLayout:
+        spacing: 10
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                id: 'title'
+                text: 'This is new...'
+                font_size: 20
+                text_size: self.size
+                halign: 'center'
+            Label:
+                id: 'description'
+                text: "I don't recognize this device. Would you like to register an action for it?"
+                text_size: self.size
+                halign: 'center'
+                valign: 'center'
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Register device'
+            Button:
+                text: 'Manage devices'
+                on_press: root.manager.current = 'settings'
+            Button:
+                text: 'Quit'

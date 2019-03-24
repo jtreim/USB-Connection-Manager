@@ -1,28 +1,67 @@
-DATE    START   END     NOTES
-03/08   14:50   15:40   Initialized repository.
-                        Looking up how to remotely logon to windows machine, cause steam link
-                        needs that.
-                        https://www.tekrevue.com/tip/skip-windows-10-login-screen/ -> doesn't work remotely...
-                        https://www.intowindows.com/how-to-automatically-login-in-windows-10/ -> default password?
-                        https://stackoverflow.com/questions/48038678/how-to-programmatically-interact-with-winlogon
-                        Raspberry pi remote desktop:
-                        https://www.makeuseof.com/tag/rugged-raspberry-pi-projects-outdoors/
-                        Allow it to create a restricted Windows user on the first time?
-                        https://stackoverflow.com/questions/5984600/how-to-programmatically-create-windows-user-accounts-on-windows-7-or-windows-ser
-                        https://stackoverflow.com/questions/3729406/create-local-user-account
-                        I'd have to give it admin privileges for at least the first time though.
-                        Still need to figure out how to give an application permission to turn on
-                        the machine.
-                        
-                        https://www.ctrl.blog/entry/how-to-rdpwrapper-win10-home
-                        I might not be able to remote desktop with my version of windows 10
+DATE    START   END
+03/08   14:50   15:50
 
-                        My current thought is to create a restricted Windows user (somehow) that can only
-                        allow steam link connections. Then if I can detect a wake-up signal from the
-                        registered pi app, and recognize that it came from this app, the windows machine
-                        automatically logs in to that restricted account. Of course, automating this setup
-                        on both machines might be a bit of a pain.
-                        The only other thing for all of this is to make a script that does all this when
-                        the right USB connection is made.
+NOTES
+Initialized repository.
+Looking up how to remotely logon to windows machine, cause steam link
+needs that.
+https://www.tekrevue.com/tip/skip-windows-10-login-screen/ -> doesn't work remotely...
+https://www.intowindows.com/how-to-automatically-login-in-windows-10/ -> default password?
+https://stackoverflow.com/questions/48038678/how-to-programmatically-interact-with-winlogon
+Raspberry pi remote desktop:
+https://www.makeuseof.com/tag/rugged-raspberry-pi-projects-outdoors/
+Allow it to create a restricted Windows user on the first time?
+https://stackoverflow.com/questions/5984600/how-to-programmatically-create-windows-user-accounts-on-windows-7-or-windows-ser
+https://stackoverflow.com/questions/3729406/create-local-user-account
+I'd have to give it admin privileges for at least the first time though.
+Still need to figure out how to give an application permission to turn on
+the machine.
+                        
+https://www.ctrl.blog/entry/how-to-rdpwrapper-win10-home
+I might not be able to remote desktop with my version of windows 10
+
+My current thought is to create a restricted Windows user (somehow) that can only
+allow steam link connections. Then if I can detect a wake-up signal from the
+registered pi app, and recognize that it came from this app, the windows machine
+automatically logs in to that restricted account. Of course, automating this setup
+on both machines might be a bit of a pain.
+The only other thing for all of this is to make a script that does all this when
+the right USB connection is made.
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-DATE    START   END     NOTES                     
+DATE    START   END                 
+03/22   17:35   19:00
+
+NOTES
+Both a python option for sending WOL commands (just the wakeonlan library), and
+a couple of simple bash commands (requires sed and netcat).
+
+Bash command(s):
+MAC=11:22:33:44:55:66
+echo -e $(echo $(printf 'f%.0s' {1..12}; printf "$(echo $MAC | sed 's/://g')%.0s" {1..16}) | sed -e 's/../\\x&/g') | nc -w1 -u -b 255.255.255.255 4000
+
+Sooo . . . port forwarding might be messy from my apartment . . . I might need
+the host on a different network. I need a router I have admin access to.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END
+03/23   10:40   11:25
+        11:50   12:30
+        12:35   13:25
+        14:55   15:35
+
+NOTES
+Look into Kivy for GUI. Create dependency file.
+
+Kivy's kinda nice. Setup for how I want to organize screens,
+widgets, and general app structure. Shouldn't need to add much to the app, but
+if I wanted to expand this to creating a platform that registers a command
+for USB connections (or any connection, for that matter), this seems simple enough.
+
+The current plan is to attach a bash script to all USB connections, which just
+tells the machine to run my app. The app can then handle registering new
+devices, or running commands as needed.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END
+03/24   17:50   
+
+NOTES

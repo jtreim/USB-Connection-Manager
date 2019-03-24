@@ -1,0 +1,10 @@
+#:kivy 1.10.1
+<SettingsScreen>
+    BoxLayout:
+        spacing: 10
+        orientation: 'vertical'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'add_device'
+        Button:
+            text: 'Quit'
