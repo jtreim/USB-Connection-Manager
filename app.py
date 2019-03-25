@@ -2,6 +2,7 @@ import kivy
 kivy.require('1.10.1')
 
 from kivy.app import App
+from kivy.config import Config
 from kivy.lang import Builder
 from kivy.graphics import Color, Rectangle
 from kivy.uix.boxlayout import BoxLayout
@@ -11,6 +12,9 @@ from kivy.uix.screenmanager import ScreenManager
 
 from screens.add_device.add_device import AddDeviceScreen
 from screens.settings.settings import SettingsScreen  
+
+Config.set('graphics', 'width', 400)
+Config.set('graphics', 'height', 200)
 
 class StreamerApp(App):
 	def build(self):

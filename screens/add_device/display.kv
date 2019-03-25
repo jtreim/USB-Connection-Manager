@@ -2,21 +2,44 @@
 
 <AddDeviceScreen>
     BoxLayout:
-        spacing: 10
         BoxLayout:
             orientation: 'vertical'
-            Label:
-                id: 'title'
-                text: 'This is new...'
-                font_size: 20
-                text_size: self.size
-                halign: 'center'
-            Label:
-                id: 'description'
-                text: "I don't recognize this device. Would you like to register an action for it?"
-                text_size: self.size
-                halign: 'center'
-                valign: 'center'
+            AnchorLayout:
+                anchor_x:'center'
+                anchor_y:'top'
+                size_hint:1, .1
+                Label:
+                    id: 'title'
+                    text: 'This is new...'
+                    font_size: 20
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'center'
+                    padding: 20, 40
+                    canvas.before:
+                        Color:
+                            rgba: .5,.5,.5,1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+            AnchorLayout:
+                anchor_x:'center'
+                anchor_y:'bottom'
+                padding:5
+                size_hint:1, .3
+                Label:
+                    id: 'description'
+                    text: "I don't recognize this device. Would you like to register an action for it?"
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    padding: 5, 5
+                    canvas.before:
+                        Color:
+                            rgba: .5,.5,.5,1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
         BoxLayout:
             orientation: 'vertical'
             Button:

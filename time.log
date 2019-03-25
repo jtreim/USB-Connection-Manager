@@ -62,6 +62,15 @@ tells the machine to run my app. The app can then handle registering new
 devices, or running commands as needed.
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 DATE    START   END
-03/24   17:50   
+03/24   17:50   18:50
 
 NOTES
+Figured out backgrounds to these widgets. Kivy is conveniently hands-off on
+almost everything, which was more convenient for them than it is for me.
+Honestly, why they didn't include setting a background color is beyond me,
+because I don't know of anyone at all that would stress about each widget being
+able to define their own background color.
+
+I might not bother with implementing a window resize. Yet another thing that
+probably should be easier, but in the name of simplicity's sake, was not
+thought too much about.
