@@ -1,5 +1,5 @@
-DATE    START   END
-03/08   14:50   15:50
+DATE    START   END     TOTAL
+03/08   14:50   15:50   1 hr
 
 NOTES
 Initialized repository.
@@ -27,50 +27,89 @@ automatically logs in to that restricted account. Of course, automating this set
 on both machines might be a bit of a pain.
 The only other thing for all of this is to make a script that does all this when
 the right USB connection is made.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-DATE    START   END                 
-03/22   17:35   19:00
+DATE    START   END     TOTAL          
+03/22   17:35   19:00   2 hr, 25 min
 
 NOTES
 Both a python option for sending WOL commands (just the wakeonlan library), and
-a couple of simple bash commands (requires sed and netcat).
+a couple of bash commands (requires sed and netcat).
 
 Bash command(s):
 MAC=11:22:33:44:55:66
 echo -e $(echo $(printf 'f%.0s' {1..12}; printf "$(echo $MAC | sed 's/://g')%.0s" {1..16}) | sed -e 's/../\\x&/g') | nc -w1 -u -b 255.255.255.255 4000
 
-Sooo . . . port forwarding might be messy from my apartment . . . I might need
+Sooo . . . port forwarding is messy from my apartment . . . I might need
 the host on a different network. I need a router I have admin access to.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-DATE    START   END
-03/23   10:40   11:25
+DATE    START   END     TOTAL
+03/23   10:40   11:25   5 hr, 20 min
         11:50   12:30
         12:35   13:25
         14:55   15:35
 
 NOTES
-Look into Kivy for GUI. Create dependency file.
+Looking into Kivy for GUI (near the top on Google). Create dependency file.
 
-Kivy's kinda nice. Setup for how I want to organize screens,
-widgets, and general app structure. Shouldn't need to add much to the app, but
-if I wanted to expand this to creating a platform that registers a command
-for USB connections (or any connection, for that matter), this seems simple enough.
+Kivy's kinda nice. Decided how I want to organize screens, widgets, and
+general app structure. Shouldn't need to add much to the app, but if I wanted
+to expand this to creating a platform that registers a command for USB
+connections (or any connection, for that matter), this seems simple enough.
 
 The current plan is to attach a bash script to all USB connections, which just
 tells the machine to run my app. The app can then handle registering new
 devices, or running commands as needed.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-DATE    START   END
-03/24   17:50   18:50
+DATE    START   END     TOTAL
+03/24   17:50   18:50   6 hr, 20 min
 
 NOTES
 Figured out backgrounds to these widgets. Kivy is conveniently hands-off on
-almost everything, which was more convenient for them than it is for me.
-Honestly, why they didn't include setting a background color is beyond me,
-because I don't know of anyone at all that would stress about each widget being
+almost everything, which is sometimes more convenient for them than it is for
+me. Honestly, why they didn't include setting a background color is beyond me,
+because I don't know of anyone at all that would argue against each widget being
 able to define their own background color.
 
 I might not bother with implementing a window resize. Yet another thing that
-probably should be easier, but in the name of simplicity's sake, was not
-thought too much about.
+should be easier, but in the name of simplicity's sake, was not thought too
+much about.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+03/25   16:25   20:00   12 hr, 5 min
+        21:50   00:00
+
+NOTES
+Played around a little more with how the register device window will look.
+
+Looking at how to do something when a new USB device is plugged in.
+Runs the attached script like 10 times...? For now I'll add a pidfile and check
+to only run once.
+
+Running a script on a USB connection to run the app immediately soft-killed the
+machine (the screen went black for a little bit, all applications were closed,
+I was logged out, and the screen was even oriented vertically when it came to).
+Forgot to add "&& exit" after the command to start the script. udev hangs until
+the script finishes.
+
+Maybe I ought to switch to creating a python daemon and use the pyudev library.
+I don't like having an application that is always on. Also, I need to be
+careful about not creating an annoying pop-up window that no one wants.
+Hopefully this will only be noticed on new USB connections, which shouldn't
+happen too often.
+
+Stack overflow suggests I can't create a window running a python script as
+udev. Supposedly udev doesn't have permission.
+
+Daemonizing isn't working. I can start up a sychronous process monitoring udev,
+but I should figure out how to start this in the background. Preferably without
+resorting to 'nohup' or '&'.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+
+
+NOTES
