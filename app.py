@@ -28,17 +28,12 @@ Config.set('graphics', 'height', 300)
 
 class USBConnectApp(App):
 	def build(self):
-		self.title = 'USB Connect App' 
-		# Registering a new device screen
-		device_screen = AddDeviceScreen(name='add_device')
-
-		# Settings screen
-		settings_screen = SettingsScreen(name='settings')
+		self.title = 'USB Connect App'
 
 		# Add screens to screen manager
 		sm = ScreenManager()
-		sm.add_widget(device_screen)
-		sm.add_widget(settings_screen)
+		sm.add_widget(AddDeviceScreen(name='add_device'))
+		sm.add_widget(SettingsScreen(name='settings'))
 		return sm
 
 def startup():
@@ -56,5 +51,7 @@ def startup():
 def teardown():
 	print('TEARDOWN::Shutting down gracefully...')
 
+# Running from command line
 if __name__ == '__main__':
 	startup()
+	teardown()

@@ -110,6 +110,11 @@ resorting to 'nohup' or '&'.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 DATE    START   END     TOTAL
-
+03/26   9:40    11:35   14 hrs
 
 NOTES
+I think the real issue with daemonizing is that the udev async monitoring isn't
+staying alive long enough to mean anything.
+
+Finally got the asynchronous stuff working. Daemonizing should hopefully be
+not too much more work.
