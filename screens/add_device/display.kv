@@ -2,31 +2,35 @@
 
 <AddDeviceScreen>
     BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: .25,.25,.25,1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: 'title'
+            text: 'This is new...'
+            size: self.texture_size
+            font_size: 20
+            text_size: self.size
+            halign: 'left'
+            padding: 20, 5
+            size_hint: 1, .1
+            canvas.before:
+                Color:
+                    rgba: .25,.25,.25,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
         BoxLayout:
-            orientation: 'vertical'
-            AnchorLayout:
-                anchor_x:'center'
-                anchor_y:'top'
-                size_hint:1, .1
-                Label:
-                    id: 'title'
-                    text: 'This is new...'
-                    font_size: 20
-                    text_size: self.size
-                    halign: 'center'
-                    valign: 'center'
-                    padding: 20, 40
-                    canvas.before:
-                        Color:
-                            rgba: .5,.5,.5,1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
+            size_hint: 1, .9
             AnchorLayout:
                 anchor_x:'center'
                 anchor_y:'bottom'
                 padding:5
-                size_hint:1, .3
+                size_hint: .67, 1
                 Label:
                     id: 'description'
                     text: "I don't recognize this device. Would you like to register an action for it?"
@@ -36,16 +40,19 @@
                     padding: 5, 5
                     canvas.before:
                         Color:
-                            rgba: .5,.5,.5,1
+                            rgba: .4,.4,.4,1
                         Rectangle:
                             pos: self.pos
                             size: self.size
-        BoxLayout:
-            orientation: 'vertical'
-            Button:
-                text: 'Register device'
-            Button:
-                text: 'Manage devices'
-                on_press: root.manager.current = 'settings'
-            Button:
-                text: 'Quit'
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 10
+                spacing: 5
+                size_hint: .33, 1
+                Button:
+                    text: 'Register device'
+                Button:
+                    text: 'Manage devices'
+                    on_press: root.manager.current = 'settings'
+                Button:
+                    text: 'Quit'
