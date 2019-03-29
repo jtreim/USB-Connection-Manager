@@ -40,7 +40,7 @@ class USBConnectApp(App):
 		print('STARTUP::Trying to run the program!')
 		
 		# Create pidfile
-		if os.path.isfile(PIDFILE):
+		if self.is_running():
 			print('STARTUP::Says I can\'t.')
 			sys.exit()
 		else:
@@ -48,19 +48,15 @@ class USBConnectApp(App):
 			with PidFile(piddir=RUN_DIR):
 				super(USBConnectApp, self).run()
 
+	def is_running(self):
+		return os.path.isfile(PIDFILE)
+
 	def stop(self):
 		print('TEARDOWN::Shutting down gracefully...')
 		super(USBConnectApp, self).stop()
+		sys.exit()
 
 app = USBConnectApp()
-
-def startup():
-	app.run()
-
-def teardown():
-	# Finish all other tasks and shutdown
-	if os.path.isfile(PIDFILE):
-		app.stop()
 
 # Running from command line
 if __name__ == '__main__':

@@ -121,11 +121,11 @@ not too much more work.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 DATE    START   END     TOTAL
-03/28   18:40   19:30   14 hrs 50 min
-
+03/28   18:40   19:30   15 hrs 50 min
+        21:30   22:30
 NOTES
 Turns out all I needed to do for WOL to work on the Windows host was turn off
-fast startup. Although I did find articles pointing out how allowing WOL is a
+fast startup. Also, I did find articles pointing out how allowing WOL is a
 slight security issue; less so in a home environment, but still. This explains
 why WOL is not natively enabled. It does make me wonder whether I'd like to
 theoretically allow both WOL and a direct connection to my computer with port
@@ -134,3 +134,11 @@ forwarding or a VPN.
 The pidfile package I'm using is only supported on Linux. So currently the app
 itself can only run in Linux. Unless I want to develop a Windows version, that
 is just how things are going to be.
+
+I don't know why it isn't daemonizing...but everything else so far has been
+pretty straightforward.
+
+It's looking like there'll ultimately be 2 main scripts: one to add/remove
+commands for devices, and one to determine how to interpret USB connections
+and disconnections. I might need to create bit flags to be able to understand
+all events that happen in between times the second script is actually awake.
