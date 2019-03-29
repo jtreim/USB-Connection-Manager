@@ -118,3 +118,19 @@ staying alive long enough to mean anything.
 
 Finally got the asynchronous stuff working. Daemonizing should hopefully be
 not too much more work.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+03/28   18:40   19:30   14 hrs 50 min
+
+NOTES
+Turns out all I needed to do for WOL to work on the Windows host was turn off
+fast startup. Although I did find articles pointing out how allowing WOL is a
+slight security issue; less so in a home environment, but still. This explains
+why WOL is not natively enabled. It does make me wonder whether I'd like to
+theoretically allow both WOL and a direct connection to my computer with port
+forwarding or a VPN.
+
+The pidfile package I'm using is only supported on Linux. So currently the app
+itself can only run in Linux. Unless I want to develop a Windows version, that
+is just how things are going to be.
