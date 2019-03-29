@@ -36,22 +36,34 @@ class USBConnectApp(App):
 		sm.add_widget(SettingsScreen(name='settings'))
 		return sm
 
+	def run(self):
+		print('STARTUP::Trying to run the program!')
+		
+		# Create pidfile
+		if os.path.isfile(PIDFILE):
+			print('STARTUP::Says I can\'t.')
+			sys.exit()
+		else:
+			print('STARTUP::I am about to start!')
+			with PidFile(piddir=RUN_DIR):
+				super(USBConnectApp, self).run()
+
+	def stop(self):
+		print('TEARDOWN::Shutting down gracefully...')
+		super(USBConnectApp, self).stop()
+
+app = USBConnectApp()
+
 def startup():
-	print('STARTUP::Trying to run the program!')
-	
-	# Create pidfile
-	if os.path.isfile(PIDFILE):
-		print('STARTUP::Says I can\'t.')
-		sys.exit()
-	else:
-		print('STARTUP::I am about to start!')
-		with PidFile(piddir=RUN_DIR):
-			USBConnectApp().run()
+	app.run()
 
 def teardown():
-	print('TEARDOWN::Shutting down gracefully...')
+	# Finish all other tasks and shutdown
+	if os.path.isfile(PIDFILE):
+		app.stop()
 
 # Running from command line
 if __name__ == '__main__':
-	startup()
-	teardown()
+	app.run()
+	if os.path.isfile(PIDFILE):
+		app.stop()

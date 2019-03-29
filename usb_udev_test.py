@@ -22,21 +22,18 @@ def handle_event(action, device):
         print('{} connected'.format(device))
         global event
         event = EVENT_NEW_DEVICE
+ 
+if __name__ == "__main__":
+    with daemon.DaemonContext():
+        udev_observer = pyudev.MonitorObserver(udev_monitor, handle_event)
+        udev_observer.start()
+        while not finished:
+            if event == EVENT_NEW_DEVICE:
+                event = EVENT_NONE
+                app_startup()
 
-# with daemon.DaemonContext():
-udev_observer = pyudev.MonitorObserver(udev_monitor, handle_event)
-udev_observer.start()
-
-
-
-while not finished:
-    if event == EVENT_NEW_DEVICE:
-        event = EVENT_NONE
-        app_startup()
-
-        # When app finishes, make sure it stops gracefully
-        app_cleanup()
-
-    time.sleep(.1)
-
-# Wrap up any remaining work and shut down
+                # When app finishes, make sure it stops gracefully
+                finished = True
+            time.sleep(1)
+    
+        # Wrap up any remaining work and shut down
