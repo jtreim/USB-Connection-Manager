@@ -31,19 +31,28 @@
                 anchor_y:'bottom'
                 padding:5
                 size_hint: .67, 1
+                canvas.before:
+                    Color:
+                        rgba: .4,.4,.4,1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 Label:
-                    id: 'description'
+                    id: 'prompt'
                     text: "I don't recognize this device. Would you like to register an action for it?"
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'top'
+                    padding: 5, 5
+
+                Label:
+                    id: 'device_id'
+                    text: 'Device ID: ' + root.add_device_id
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
                     padding: 5, 5
-                    canvas.before:
-                        Color:
-                            rgba: .4,.4,.4,1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
+
             BoxLayout:
                 orientation: 'vertical'
                 padding: 10

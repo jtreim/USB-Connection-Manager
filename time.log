@@ -142,3 +142,67 @@ It's looking like there'll ultimately be 2 main scripts: one to add/remove
 commands for devices, and one to determine how to interpret USB connections
 and disconnections. I might need to create bit flags to be able to understand
 all events that happen in between times the second script is actually awake.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+04/02   19:30   21:00   17 hrs 20 min
+
+NOTES
+Set up a basic "db"--really just a json file that I read/write to. I tried to
+write it so it wouldn't matter too much if I decided to write out a new dbtool
+that involved an actual database structure.
+
+Current error I'm getting:
+WARNING:kivy:stderr: AttributeError: module 'daemon' has no attribute 'DaemonContext'
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+04/05   12:00   14:40   22 hrs 30 min
+        17:40   18:20   
+        19:30   21:20
+NOTES
+Don't name the daemon script the same thing as the module used within it.
+That's what that error meant.
+
+There's a really ugly world beneath identifying USB devices in udev. Not a
+lot of consistency in attributes retrieved between usb port connections. And
+several rapid-fire announcements to the system that something new just
+connected. I have a rough way to identify different usb objects, but I'm
+sure it is not foolproof.
+
+Also worked on setting up some bit flags for adding or removing devices while
+the daemon script does its thing. Prolly going to want to spawn a new app
+process instead of hanging the script when it's time to register a new device.
+
+As long as I have a usb device with my custom id registered, with a bash cmd to
+do, I can run it. I just turned on my desktop computer by plugging in my usb
+controller.
+
+In order to pass in flags to the kivy app, I inserted another main script into
+the process. I have to import kivy and everything about the app with a clean
+sys.argv, or else kivy grabs flags that I don't want it to get.
+
+The flow now looks like this:
+When monitor.py starts up, it listens for any pyudev events. If an event occurs
+it determines whether it needs to turn on the window or just run a command. If
+it runs a command, it goes back to waiting for more pyudev events. If it needs
+to turn on the app, it spawns a child process to run manager.py, and then goes
+back to waiting for more events.
+
+When manager.py starts up, it checks the command-line arguments it receives to
+determine what to give to the app. Once it has parsed all the flags and their
+values, it clears the sys.argv for the app. Then it initializes the app with
+the flag values it got, and runs the app USBApp.py.
+
+The USBApp.py displays what values it got from the manager. The plan is to have
+it interact with either manager.py or the dbtool itself to register commands
+for usb connections.
+
+
+This is getting messy.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+
+
+NOTES
