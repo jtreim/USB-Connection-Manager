@@ -1,0 +1,11 @@
+{
+    "ACTION": "add",
+    "DEVTYPE": "usb_interface",
+    "ID_USB_CLASS_FROM_DATABASE": "Vendor Specific Class",
+    "ID_USB_PROTOCOL_FROM_DATABASE": "Vendor Specific Protocol",
+    "ID_USB_SUBCLASS_FROM_DATABASE": "Vendor Specific Subclass",
+    "ID_VENDOR_FROM_DATABASE": "Logic3",
+    "PRODUCT": "e6f/213/100",
+    "SUBSYSTEM": "usb",
+    "TYPE": "255/255/255"
+}
