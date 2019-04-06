@@ -1,0 +1,8 @@
+{
+    "registered_id_actions": {
+        "Logic3-e6f/213/100": {
+            "id": "Logic3-e6f/213/100",
+            "action": "python wol_test.py"
+        }
+    }
+}
