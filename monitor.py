@@ -1,14 +1,17 @@
 import daemon
+import os
 import pyudev
 import time
+import signal
 import subprocess
 
-from constants import *
+from common import *
+from kivy_files.USBApp import USBManagerApp
+
 from data.tools.json import JsonDBTool
 from data.USBDevice import USBDevice
-from manager import app_is_running
 
-START_APP = 'python manager.py'
+finished = False
 
 EVENT_NONE = 0
 EVENT_ADD_DEVICE = 1
@@ -18,7 +21,15 @@ event = EVENT_NONE
 added = []
 removed = []
 
-def handle_event(action, device):
+
+def stop(sig, frame):
+    global finished
+    print('I\'m stopping everything now...')
+    finished = True
+
+signal.signal(signal.SIGINT, stop)
+
+def handle_udev_event(action, device):
     global event
     global added
     global removed
@@ -39,14 +50,6 @@ def handle_event(action, device):
         event |= EVENT_REMOVE_DEVICE
         if custom_id not in removed:
             removed.append(custom_id)
- 
-def run_command(cmd, args={}):
-    arg_list = [cmd]
-    for key in args:
-        arg_list.append(key)
-        arg_list.append(args.get(key))
-    
-    subprocess.Popen(arg_list, shell=True, executable='/bin/bash')
 
 if __name__ == "__main__":
     # with daemon.DaemonContext():
@@ -57,39 +60,33 @@ if __name__ == "__main__":
     udev_monitor.filter_by(subsystem='usb')
     
     # Listen for udev events
-    udev_observer = pyudev.MonitorObserver(udev_monitor, handle_event)
+    udev_observer = pyudev.MonitorObserver(udev_monitor, handle_udev_event)
     udev_observer.start()
 
-
-    # Load all data from the dbTool
-    db = JsonDBTool()
-    registered_devices = db.get_all()
-    devices = {}
-    for dev in registered_devices:
-        device = USBDevice(dev.get('id'), dev.get('action'))
-        devices[device.id] = device
-
     # Run process until told stahp
-    finished = False
     while not finished:
 
+        # A device was connected
         if event & EVENT_ADD_DEVICE:
             for dev_id in added:
+                global devices
                 if dev_id in devices:
                     device = devices.get(dev_id)
                     devices.get(dev_id).active = True
-                    if device.action != NO_ACTION:
-                        run_command(device.action)
-                    elif not app_is_running():
-                        run_command(START_APP, args={"-a":dev_id})
+
+                else:
+                    devices[dev_id] = USBDevice(dev_id, active=True)
+
 
             event ^= EVENT_ADD_DEVICE
 
+        # A device was disconnected
         elif event & EVENT_REMOVE_DEVICE:
             event ^= EVENT_REMOVE_DEVICE
-            if app.is_running():
-                app.update_devices(devices)
-
+            
+                
+        # Sleep until next event
         time.sleep(1)
     
-        # Wrap up any remaining work and shut down
+    
+    # Wrap up any remaining work and shut down

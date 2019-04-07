@@ -1,0 +1,26 @@
+#:kivy 1.10.1
+<DeviceInput>
+    size: self.size
+    pos: self.pos
+    orientation: 'horizontal'
+    size_hint: 1, 1
+    canvas.before:
+        Color:
+            rgba: (.18,.576,.706,1) if root.device_active else (.4,.4,.4,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        
+    Label:
+        id: 'device_id'
+        text: root.device_id
+        pos: self.pos
+        size: self.size
+        size_hint: .3, 1
+
+    TextInput:
+        id: 'device_action'
+        text: root.device_action
+        pos: self.pos
+        size: self.size
+        size_hint: .7, 1

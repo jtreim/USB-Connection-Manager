@@ -1,20 +1,33 @@
 import json
 import logging
 import os
+from PyQt5.QtCore import QObject
+from PyQt5.QtCore import pyqtSignal as Signal
 
-from constants import *
+from common import *
 from data.tools.dbtool import DBTool
 
-class JsonDBTool(DBTool):
+NO_ACTION = 'none'
+
+class JsonDBTool(QObject):
+    # Inner DB Constants
     HEADER = 'registered_id_actions'
     DEFAULT_DB = 'data/register_id_acts.json'
+
+    # Signals
+    loaded = Signal()
+    saved = Signal()
+
+    initialized = Signal()
+
     def __init__(self, file_name=DEFAULT_DB):
         self._set_file(file_name)
+        self.initialized.emit()
 
-    def register(self, id, command=NO_ACTION, save=True):
-        logging.debug('id to register: %s command: %s' % (id, command))
-        registered_id = { 'id': id, 'command': command }
-        self.data[HEADER][id] = command
+    def register(self, id, cmd=NO_ACTION, save=True):
+        logging.debug('id to register: %s command: %s' % (id, cmd))
+        registered_id = { 'id': id, 'command': cmd }
+        self.data[HEADER][id] = cmd
         if save:
             self.save()
         return registered_id
@@ -23,6 +36,7 @@ class JsonDBTool(DBTool):
         with open(self.file_name, 'w') as outfile:
             json.dump(self.data, outfile)
         logging.info('Registration file updated.')
+        self.saved.emit()
     
     def get(self, id):
         return self.data[self.HEADER].get(id, {})
@@ -35,6 +49,7 @@ class JsonDBTool(DBTool):
 
     def load_db(self, file_name=DEFAULT_DB):
         self._set_file(file_name)
+        self.loaded.emit()
 
     def _set_file(self, file_name=DEFAULT_DB):
         self.file_name = file_name

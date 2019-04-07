@@ -8,3 +8,5 @@ lockfile==0.12.2
 msgpack==0.6.1
 python-daemon==2.2.3
 argparse==1.4.0
+PyQt5==5.12.1
+PyQt5-sip==4.19.15

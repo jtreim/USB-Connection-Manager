@@ -6,7 +6,7 @@ from kivy.uix.screenmanager import Screen
 
 from views.device_rv.device_rv import DeviceRV
 
-Builder.load_file('screens/settings/display.kv')
+Builder.load_file('screens/test/display.kv')
 
-class SettingsScreen(Screen):
-	pass
+class TestScreen(Screen):
+    pass

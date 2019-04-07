@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
-from constants import *
+from common import *
+
+NO_ACTION = 'none'
 
 class DBTool(ABC):
     def __init__(self):

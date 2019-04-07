@@ -203,6 +203,26 @@ This is getting messy.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 DATE    START   END     TOTAL
-
+04/06   10:30   11:00   27 hrs 40 min
+        15:50   16:30
+        21:10   01:00
 
 NOTES
+How do I send info to an already running app? I need some way to update things
+from the outside with my current setup.
+
+I'm thinking PyQt5 signals and slots. I've got the idea of basic signalling,
+but I'll have to get everything connected to where it needs to be. With the
+PyQt5 signals, though, I might be scrapping that manager.py insertion I made.
+Instead I go back to monitor.py directly signalling the USBApp.py to update
+devices on new connections. I think I'd prefer that anyways. It's getting
+congested in here. 
+
+Spent a lot of time figuring out recycleviews within screens and stuffes. I was
+able to finally get my custom device input layout held within my custom device
+recycleview within a screen inside a screen manager looking not stupid. I'll
+have to keep working to be able to pass data from my app to a screen to the
+recycleview to each layout input (or back out the same chain). All in all, this
+may be one of the last major pieces.
+
+I'll be doing more restructuring . . .

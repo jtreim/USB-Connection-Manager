@@ -5,7 +5,8 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty
 
-Builder.load_file('kivy_files/screens/add_device/display.kv')
+Builder.load_file('screens/main/display.kv')
 
-class AddDeviceScreen(Screen):
-	add_device_id = StringProperty()
+class MainScreen(Screen):
+	subtitle = StringProperty()
+	msg = StringProperty()
