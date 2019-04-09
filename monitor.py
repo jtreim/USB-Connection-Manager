@@ -4,7 +4,6 @@ import sys
 import pyudev
 import time
 import signal
-# import subprocess
 
 from PyQt5.QtCore import QObject, pyqtSlot
 
@@ -14,7 +13,6 @@ from app.run import USBManagerApp
 from data.tools.json import JsonDBTool
 from data.USBDevice import USBDevice
 
-# finished = False
 
 EVENT_NONE = 0
 EVENT_ADD_DEVICE = 1
@@ -27,16 +25,16 @@ removed = []
 # When PyQt5 fails to tell you anything, cause it does its own thing for
 # exceptions.
 
-sys._excepthook = sys.excepthook
+# sys._excepthook = sys.excepthook
 
-def application_exception_hook(exctype, value, traceback):
-    # Let's try to write the problem
-    print("Exctype : %s, value : %s traceback : %s"%(exctype, value, traceback))
-    # Call the normal Exception hook after (this will probably abort application)
-    sys._excepthook(exctype, value, traceback)
-    sys.exit(1)
+# def application_exception_hook(exctype, value, traceback):
+#     # Let's try to write the problem
+#     print("Exctype : %s, value : %s traceback : %s"%(exctype, value, traceback))
+#     # Call the normal Exception hook after (this will probably abort application)
+#     sys._excepthook(exctype, value, traceback)
+#     sys.exit(1)
 
-sys.excepthook = application_exception_hook
+# sys.excepthook = application_exception_hook
 
 def handle_udev_event(action, device):
     global event
@@ -59,6 +57,7 @@ def handle_udev_event(action, device):
         event |= EVENT_REMOVE_DEVICE
         if custom_id not in removed:
             removed.append(custom_id)
+
 
 class Monitor(QObject):
     def __init__(self):
@@ -171,6 +170,7 @@ class Monitor(QObject):
 
     def cleanup(self):
         self.db.save()
+
 
 usb_monitor = Monitor()
 

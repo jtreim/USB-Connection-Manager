@@ -229,7 +229,7 @@ I'll be doing more restructuring . . .
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 DATE    START   END     TOTAL
-04/08   14:30   19:50   33 hrs
+04/08   14:30   20:00   33 hrs 10 min
 
 NOTES
 I can now propagate data in the settings screen all the way down to device inputs
@@ -246,6 +246,7 @@ I don't know why I'm getting these.
 Error: Process object has no attribute 'close'
 Error: NoneType object has no attribute 'terminate'
 Error: device_toggled is missing two positional arguments 'device_id' and 'is_active'
+
 For now I'm using os.kill to stop the app process. Hopefully that isn't too harsh.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
