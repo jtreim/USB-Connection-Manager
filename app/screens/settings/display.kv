@@ -1,0 +1,47 @@
+#:kivy 1.10.1
+<SettingsScreen>
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: .25,.25,.25,1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: 'subtitle'
+            text: 'Registered Device Actions'
+            size: self.texture_size
+            font_size: 20
+            text_size: self.size
+            halign: 'left'
+            padding: 20, 5
+            size_hint: 1, .1
+            canvas.before:
+                Color:
+                    rgba: .25,.25,.25,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout:
+            size_hint: 1, .9 
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 10
+                spacing: 5
+                size_hint: .33, 1
+                Button:
+                    text: 'Home'
+                    on_press:
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'main'
+                Button:
+                    text: 'Save'
+                    on_press:
+                        root.save()
+                Button:
+                    text: 'Quit'
+                    on_press: app.get_running_app().stop()
+
+            DeviceRV:
+                data: root.data

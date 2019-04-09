@@ -226,3 +226,27 @@ recycleview to each layout input (or back out the same chain). All in all, this
 may be one of the last major pieces.
 
 I'll be doing more restructuring . . .
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL
+04/08   14:30   19:50   33 hrs
+
+NOTES
+I can now propagate data in the settings screen all the way down to device inputs
+and back out.
+
+Trying to connect everything intelligently. I've been able to reduce the lines
+of code.
+
+Added the multiprocessing library now too...I don't think I'll finish it all by
+the time I hit 35 hours. I'm close-ish, but there's are enough problems that I
+would be surprised if it all works in the end.
+
+I don't know why I'm getting these.
+Error: Process object has no attribute 'close'
+Error: NoneType object has no attribute 'terminate'
+Error: device_toggled is missing two positional arguments 'device_id' and 'is_active'
+For now I'm using os.kill to stop the app process. Hopefully that isn't too harsh.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+DATE    START   END     TOTAL

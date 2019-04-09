@@ -1,0 +1,27 @@
+{
+    '_identity': (1,),
+    '_config': {
+        'authkey': b'),\xf3\x1d\xcc.\x8d\xa7\xa6]_\x8ef\x14\xc1h(\xde\xf7\x05}\xac\x02)\xc0\xbe\x14n\xeb\x86\xdf\xeb',
+        'semprefix': '/mp'
+    },
+    '_parent_pid': 25419,
+    '_popen': None,
+    '_target': <bound method USBManagerApp.run of <app.run.USBManagerApp object at 0x7f20faac9660>>,
+    '_args': (),
+    '_kwargs': {},
+    '_name': 'Process-1'
+}
+{
+    '_identity': (1,),
+    '_config': {
+        'authkey': b'),\xf3\x1d\xcc.\x8d\xa7\xa6]_\x8ef\x14\xc1h(\xde\xf7\x05}\xac\x02)\xc0\xbe\x14n\xeb\x86\xdf\xeb',
+        'semprefix': '/mp'
+    },
+
+    '_parent_pid': 25419,
+    '_popen': None,
+    '_target': <bound method USBManagerApp.run of <app.run.USBManagerApp object at 0x7f20faac9660>>,
+    '_args': (),
+    '_kwargs': {},
+    '_name': 'Process-1'
+}
