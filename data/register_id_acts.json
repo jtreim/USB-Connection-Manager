@@ -1,1 +1,1 @@
-{"registered_id_actions": {}}
+{"registered_id_actions": {"46d/c52b/1207": {"device_id": "46d/c52b/1207", "device_action": "none", "device_name": "Logitech, Inc. usb"}, "4ad/c52b/1207": {"device_id": "4ad/c52b/1207", "device_action": "notify-send 'title' 'message'", "device_name": "Logic3 usb"}, "4cd/c52b/1207": {"device_id": "4cd/c52b/1207", "device_action": "notify-send 'title' 'message'", "device_name": "Samsung usb"}}}

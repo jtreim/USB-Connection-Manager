@@ -9,9 +9,10 @@ class USBDevice(QObject):
     action_changed = pyqtSignal(str, str)
     active_toggled = pyqtSignal(str, bool)
 
-    def __init__(self, id, action=NO_ACTION, active=False):
+    def __init__(self, id, name, action=NO_ACTION, active=False):
         super(USBDevice, self).__init__()
         self.id = id
+        self.name = name
         self._action = action
         self._active = active
 
@@ -27,6 +28,7 @@ class USBDevice(QObject):
         self.action_changed.emit(self.id, new_action)
     
     def do_action(self):
+        print('Action called for USBDevice with id {}'.format(self.id))
         process = subprocess.Popen(self._action.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
     

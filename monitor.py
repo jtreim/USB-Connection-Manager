@@ -19,11 +19,10 @@ EVENT_ADD_DEVICE = 1
 EVENT_REMOVE_DEVICE = 2
 
 event = EVENT_NONE
-added = []
+added = {}
 removed = []
 
-# When PyQt5 fails to tell you anything, cause it does its own thing for
-# exceptions.
+# When PyQt5 fails to tell you anything, cause it does its own exception thing
 
 # sys._excepthook = sys.excepthook
 
@@ -43,20 +42,23 @@ def handle_udev_event(action, device):
 
     if action == 'add':
         # Create a unique id for the device
-        custom_id = '{}-{}'.format(device.get('ID_VENDOR_FROM_DATABASE'),
-                                   device.get('PRODUCT'))
+        name = '{} {}'.format(device.get('ID_VENDOR_FROM_DATABASE', 'unknown'),
+                              device.get('SUBSYSTEM', ''))
+        id = device.get('PRODUCT')
         event |= EVENT_ADD_DEVICE
-        if custom_id not in added:
-            added.append(custom_id)
+        if id not in added:
+            added[id] = {
+                'name': name,
+                'id': id
+            }
         
 
     elif action == 'remove':
         # Create a unique id for the device
-        custom_id = '{}-{}'.format(device.get('ID_VENDOR_FROM_DATABASE'),
-                                   device.get('PRODUCT'))
+        id = device.get('PRODUCT', '')
         event |= EVENT_REMOVE_DEVICE
-        if custom_id not in removed:
-            removed.append(custom_id)
+        if id != '' and id not in removed:
+            removed.append(id)
 
 
 class Monitor(QObject):
@@ -72,7 +74,8 @@ class Monitor(QObject):
             id = device.get('device_id', '')
             if id != '':
                 action = device.get('device_action')
-                d = USBDevice(id, action=action)
+                name = device.get('device_name')
+                d = USBDevice(id, name, action=action)
                 d.action_changed.connect(self.device_registered)
                 d.active_toggled.connect(self.device_toggled)
                 self.devices[id] = d
@@ -91,6 +94,7 @@ class Monitor(QObject):
         self.finished = False
 
     def update_app(self):
+        print('update_app called!')
         updated = self.get_device_list()
         self.app.update_devices(updated)
     
@@ -100,14 +104,17 @@ class Monitor(QObject):
             dev = self.devices[key]
             result.append({
                 'device_id': dev.id,
+                'device_name': dev.name,
                 'device_action': dev.action,
                 'device_active': dev.active
             })
+        print('get_device_list sent: {}'.format(result))
         return result
 
     @pyqtSlot()
     def device_registered(self, device_id, new_action):
-        self.db.register(device_id, cmd=new_action, save=False)
+        name = self.devices[id].name
+        self.db.register(device_id, name, cmd=new_action, save=False)
         self.update_app()
 
     @pyqtSlot()
@@ -136,6 +143,8 @@ class Monitor(QObject):
                         self.devices.get(dev_id).active = True
                         if device.action != self.db.NO_ACTION:
                             device.do_action()
+                        elif not self.app.is_running():
+                            self.app.process.start()
                         else:
                             self.update_app()
                     

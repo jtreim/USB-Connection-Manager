@@ -24,9 +24,9 @@ class JsonDBTool(QObject):
         self._set_file(file_name)
         self.initialized.emit()
 
-    def register(self, id, cmd=NO_ACTION, save=True):
-        logging.debug('id to register: %s command: %s' % (id, cmd))
-        registered_id = { 'id': id, 'command': cmd }
+    def register(self, id, name='unknown', cmd=NO_ACTION, save=True):
+        logging.debug('id to register: %s action: %s' % (id, cmd))
+        registered_id = { 'device_id': id, 'device_action': cmd, 'device_name': name }
         self.data[HEADER][id] = cmd
         if save:
             self.save()

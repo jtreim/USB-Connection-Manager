@@ -34,6 +34,9 @@ class USBManagerApp(App):
 		self.settings_screen = SettingsScreen(name='settings')
 		self.settings_screen.data = self.devices
 		self.main_screen = MainScreen(name='main')
+		self.main_screen.subtitle = 'This is new...'
+		self.main_screen.msg = ('I don\'t recognize this device. Would you '
+								'like to register an action for it?')
 
 		# Add screens to screen manager
 		sm = ScreenManager()
@@ -45,9 +48,10 @@ class USBManagerApp(App):
 		return self.process.is_alive()
 
 	def update_devices(self, data):
+		print('got data: {}'.format(data))
 		self.devices = data
 		if self.is_running() and self.settings_screen:
-			self.settings_screen.data = data
+			self.settings_screen.update_data(data)
 
 	def stop(self):
 		super(USBManagerApp, self).stop()
